@@ -37,3 +37,23 @@ def test_r2():
     # predictiong mean should be 0.0
     y_pred = np.full(len(y_true), np.mean(y_true))
     assert compute_r2(y_true, y_pred) == 0.0
+
+
+def test_rmse():
+    from pkoffee.metrics import compute_rmse
+
+    rng = np.random.default_rng(seed=0)
+    y_true = rng.normal(size=10)
+
+    # perfect prediction is 0.0
+    assert compute_rmse(y_true, y_true) == 0.0
+
+    
+def test_mae():
+    from pkoffee.metrics import compute_rmse
+
+    rng = np.random.default_rng(seed=0)
+    y_true = rng.normal(size=10)
+
+    # perfect prediction is 0.0
+    assert compute_rmse(y_true, y_true) == 0.0
