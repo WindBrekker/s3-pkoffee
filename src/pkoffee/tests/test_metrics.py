@@ -38,6 +38,9 @@ def test_r2():
     y_pred = np.full(len(y_true), np.mean(y_true))
     assert compute_r2(y_true, y_pred) == 0.0
 
+    # NaN returning
+    y_true = np.ones(shape=10)
+    assert np.isnan(compute_r2(y_true, y_pred))
 
 def test_rmse():
     from pkoffee.metrics import compute_rmse
