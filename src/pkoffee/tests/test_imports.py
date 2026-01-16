@@ -1,10 +1,6 @@
 import numpy as np
 import pytest
 
-def test_import():
-    from pkoffee import metrics
-
-
 def test_size_mismatch_true():
     from pkoffee.metrics import check_size_match
 
