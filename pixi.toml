@@ -72,6 +72,12 @@ test = "pytest"
 jupyterlab = ">=4.4.3,<5"
 pytest= "*"
 
+[feature.test.dependencies]
+pytest = "9.*"
+
+[feature.test.tasks]
+test = "pytest"
+
 [environments]
 prod = { features = ["py313"], solve-group = "prod" }
 # use default for the dev environment so tasks are resolved in this environment (avoids having to specify env)
@@ -83,5 +89,5 @@ prod314 = { features = ["py314"], solve-group = "prod314" }
 
 # python 3.12 environments for testing
 prod312 = { features = ["py312"], solve-group = "prod312" }
-
-test = { features = ["test"], solve-group = "default" }
+# test env
+test = {features = ["test"], solve-group = "default"}
