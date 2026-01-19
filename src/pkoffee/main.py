@@ -11,6 +11,8 @@ Y = data["productivity"].values
 
 fig=plt.figure(figsize=(10,6))
 ax=plt.gca()
+
+
 ax.set_xlabel("Cups of Coffee")
 ax.set_ylabel("Productivity")
 ax.set_title("Productivity vs Coffee")

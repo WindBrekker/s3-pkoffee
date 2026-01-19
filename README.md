@@ -91,3 +91,6 @@ jupyterlab
 ## License
 
 MIT License
+
+## Badges
+![[pkoffee status](https://github.com/WindBrekker/s3-pkoffee/actions/workflows/test.yaml/badge.svg)

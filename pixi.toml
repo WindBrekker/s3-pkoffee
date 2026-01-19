@@ -11,6 +11,9 @@ python = ["3.12.*", "3.13.*", "3.14.*"]
 
 [dependencies]
 pkoffee = { path = "." }
+pytest = ">=9.0.2,<10"
+ruff = ">=0.14.12,<0.15"
+pytest-cov = "*"
 
 
 [package]
@@ -29,7 +32,6 @@ documentation = "https://github.com/s3-school/pkoffee/blob/main/README.md"
 [package.build]
 backend = { name = "pixi-build-python", version = ">=0.4.1,<5.0.0" }
 
-[package.build.config]
 
 [package.build-dependencies]
 
@@ -59,22 +61,16 @@ python=">=3.13,<3.14"
 [feature.py314.dependencies]
 python=">=3.14,<3.15"
 
-[feature.test.dependencies]
-pytest = "9.*"
 
 [feature.test.tasks]
 test = "pytest"
-
+coverage = "pixi run pytest --cov=src --cov-report=xml"
 
 [feature.dev.dependencies]
 jupyterlab = ">=4.4.3,<5"
-pytest= "*"
 
 [feature.test.dependencies]
 pytest = "9.*"
-
-[feature.test.tasks]
-test = "pytest"
 
 [environments]
 prod = { features = ["py313"], solve-group = "prod" }
