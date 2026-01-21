@@ -15,7 +15,9 @@ neg_inf = -data_dtype(np.inf)
 pos_inf = data_dtype(np.inf)
 accumulator_dtype = np.float64
 
-AnyShapeDataDtypeArray = TypeVar("AnyShapeDataDtypeArray", bound=np.ndarray[tuple[int, ...], np.dtype[data_dtype]])
+AnyShapeDataDtypeArray = TypeVar(
+    "AnyShapeDataDtypeArray", bound=np.ndarray[tuple[int, ...], np.dtype[data_dtype]]
+)
 
 
 class RequiredColumn(StrEnum):
@@ -44,7 +46,9 @@ class ColumnTypeError(ValueError):
     """Exception for invalid column type."""
 
     def __init__(self, col: RequiredColumn, dtype: np.dtype) -> None:
-        super().__init__(f"Column {col.value} must contain numeric values, but found dtype {dtype}")
+        super().__init__(
+            f"Column {col.value} must contain numeric values, but found dtype {dtype}"
+        )
 
 
 def validate(data: pd.DataFrame) -> None:
@@ -140,7 +144,10 @@ def load_csv(filepath: Path) -> pd.DataFrame:
 
 def extract_arrays(
     data: pd.DataFrame,
-) -> tuple[np.ndarray[tuple[int], np.dtype[data_dtype]], np.ndarray[tuple[int], np.dtype[data_dtype]]]:
+) -> tuple[
+    np.ndarray[tuple[int], np.dtype[data_dtype]],
+    np.ndarray[tuple[int], np.dtype[data_dtype]],
+]:
     """Extract cups and productivity as numpy arrays from a DataFrame.
 
     Parameters

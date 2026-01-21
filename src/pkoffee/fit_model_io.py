@@ -42,7 +42,9 @@ class UnsupportedModelFormatError(NotImplementedError):
     """Exception for non-implemented model file format."""
 
     def __init__(self, file_format: str) -> None:
-        super().__init__(f"Model format {file_format} not supported. See ModelFileFormat.")
+        super().__init__(
+            f"Model format {file_format} not supported. See ModelFileFormat."
+        )
 
 
 class ModelFileFormat(StrEnum):
@@ -110,7 +112,10 @@ def save_models_toml(model_dicts: Iterable[dict], output_path: Path) -> None:
 
 
 def save_models(
-    models: Iterable[Model], function_to_str: Mapping, output_path: Path, file_format: ModelFileFormat | None = None
+    models: Iterable[Model],
+    function_to_str: Mapping,
+    output_path: Path,
+    file_format: ModelFileFormat | None = None,
 ) -> None:
     """Save the models to disk.
 
@@ -178,7 +183,9 @@ def load_models_toml(model_file: Path, str_to_function: Mapping) -> list[Model]:
 
 
 def load_models(
-    model_file: Path, str_to_function: Mapping, file_format: ModelFileFormat | None = None
+    model_file: Path,
+    str_to_function: Mapping,
+    file_format: ModelFileFormat | None = None,
 ) -> list[Model]:
     """Load models from file.
 

@@ -70,8 +70,12 @@ def compute_r2(y_true: np.ndarray, y_pred: np.ndarray) -> data_dtype:
 
     check_size_match(y_true, y_pred)
 
-    residual_sum_of_squares = data_dtype(np.sum((y_true - y_pred) ** 2, dtype=accumulator_dtype))
-    total_sum_of_squares = data_dtype(np.sum((y_true - np.mean(y_true)) ** 2, dtype=accumulator_dtype))
+    residual_sum_of_squares = data_dtype(
+        np.sum((y_true - y_pred) ** 2, dtype=accumulator_dtype)
+    )
+    total_sum_of_squares = data_dtype(
+        np.sum((y_true - np.mean(y_true)) ** 2, dtype=accumulator_dtype)
+    )
 
     if total_sum_of_squares == 0:
         return data_dtype(np.nan)

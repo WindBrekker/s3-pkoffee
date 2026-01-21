@@ -9,7 +9,13 @@ import pandas as pd
 from pkoffee.data import data_dtype, extract_arrays, load_csv
 from pkoffee.fit_model import Model, fit_model
 from pkoffee.fit_model_io import pkoffee_function_id_mapping, save_models
-from pkoffee.parametric_function import Logistic, MichaelisMentenSaturation, Peak2Model, PeakModel, Quadratic
+from pkoffee.parametric_function import (
+    Logistic,
+    MichaelisMentenSaturation,
+    Peak2Model,
+    PeakModel,
+    Quadratic,
+)
 
 
 def default_models(x: np.ndarray, y: np.ndarray) -> list[Model]:
@@ -40,13 +46,17 @@ def default_models(x: np.ndarray, y: np.ndarray) -> list[Model]:
         Model(
             name="Michaelis-Menten",
             function=MichaelisMentenSaturation(),
-            params=MichaelisMentenSaturation.param_guess(x_min=x_min, x_max=x_max, y_min=y_min, y_max=y_max),
+            params=MichaelisMentenSaturation.param_guess(
+                x_min=x_min, x_max=x_max, y_min=y_min, y_max=y_max
+            ),
             bounds=MichaelisMentenSaturation.param_bounds(),
         ),
         Model(
             name="Logistic",
             function=Logistic(),
-            params=Logistic.param_guess(x_min=x_min, x_max=x_max, y_min=y_min, y_max=y_max),
+            params=Logistic.param_guess(
+                x_min=x_min, x_max=x_max, y_min=y_min, y_max=y_max
+            ),
             bounds=Logistic.param_bounds(),
         ),
         Model(
@@ -156,7 +166,9 @@ def format_model_rankings(fitted_models: list[Model]) -> str:
     ranking_str += "═" * line_nb_char + "\n"
     for rank, model in enumerate(fitted_models, start=1):
         r2_str = f"{model.r_squared:.4f}" if np.isfinite(model.r_squared) else "N/A"
-        ranking_str += f"{rank:<{rank_nb_char}} {model.name:<{model_nb_char}} {r2_str}\n"
+        ranking_str += (
+            f"{rank:<{rank_nb_char}} {model.name:<{model_nb_char}} {r2_str}\n"
+        )
     ranking_str += "═" * 50
 
     return ranking_str
@@ -179,7 +191,10 @@ def analyze(args: argparse.Namespace) -> None:
     # Fit models
     logger.info("Fitting models...")
     models = fit_all_models(data)
-    logger.info("Successfully fitted %s models", len([m for m in models if m.r_squared > -data_dtype(np.inf)]))
+    logger.info(
+        "Successfully fitted %s models",
+        len([m for m in models if m.r_squared > -data_dtype(np.inf)]),
+    )
 
     # Print rankings if requested
     if args.show_rankings:

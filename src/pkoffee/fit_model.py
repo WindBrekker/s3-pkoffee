@@ -23,21 +23,27 @@ class FunctionNotFoundInMappingError(KeyError):
     """Exception when a function is not found in the function to str mapping."""
 
     def __init__(self, function: type[ParametricFunction], mapping: Mapping) -> None:
-        super().__init__(f"Function {function} not found in function to str mapping {mapping}")
+        super().__init__(
+            f"Function {function} not found in function to str mapping {mapping}"
+        )
 
 
 class FunctionIdNotFoundInMappingError(KeyError):
     """Exception when a function Identifier is not found in the function Id to function mapping."""
 
     def __init__(self, function_id: str, mapping: Mapping) -> None:
-        super().__init__(f"Function Identifier {function_id} not found in mapping to function {mapping}")
+        super().__init__(
+            f"Function Identifier {function_id} not found in mapping to function {mapping}"
+        )
 
 
 class ModelParsingError(ValueError):
     """Exception when a model dictionary representation can not be parsed into a model."""
 
     def __init__(self, model_dict: Mapping) -> None:
-        super().__init__(f"Could not parse model dictionary {model_dict}, missing fields or bad types?")
+        super().__init__(
+            f"Could not parse model dictionary {model_dict}, missing fields or bad types?"
+        )
 
 
 @dataclass
@@ -136,7 +142,9 @@ class Model:
                 "r_squared": float(self.r_squared),
             }
         except KeyError as e:
-            raise FunctionNotFoundInMappingError(type(self.function), function_to_str) from e
+            raise FunctionNotFoundInMappingError(
+                type(self.function), function_to_str
+            ) from e
 
     @classmethod
     def from_dict(cls, d: Mapping, str_to_function: Mapping) -> Self:
@@ -174,7 +182,9 @@ class Model:
             try:
                 param_function = str_to_function[function_id]()
             except KeyError as e:
-                raise FunctionIdNotFoundInMappingError(d["function"], str_to_function) from e
+                raise FunctionIdNotFoundInMappingError(
+                    d["function"], str_to_function
+                ) from e
             return cls(
                 name=d["name"],
                 function=param_function,

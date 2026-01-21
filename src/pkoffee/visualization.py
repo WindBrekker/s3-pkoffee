@@ -81,7 +81,11 @@ def draw_data_violin(ax: Axes, data: pd.DataFrame) -> None:
 
 
 def draw_model_lines(
-    ax: Axes, x_smooth: np.ndarray, y_smooth: list[np.ndarray | None], labels: list[str], fig_params: FigureParameters
+    ax: Axes,
+    x_smooth: np.ndarray,
+    y_smooth: list[np.ndarray | None],
+    labels: list[str],
+    fig_params: FigureParameters,
 ) -> None:
     """Draw the models prediction lines onto `ax`.
 
@@ -101,7 +105,12 @@ def draw_model_lines(
     # Plot the curves
     legend_elements = []
     for idx, (mod_y_draw, mod_label, color) in enumerate(
-        zip(y_smooth, labels, colormaps["tab10"](np.linspace(0, 1, len(y_smooth))), strict=True)
+        zip(
+            y_smooth,
+            labels,
+            colormaps["tab10"](np.linspace(0, 1, len(y_smooth))),
+            strict=True,
+        )
     ):
         # If the predictions are not None: draw them
         # In any case: add the model to the legend so its label shows in the plot.
@@ -115,7 +124,11 @@ def draw_model_lines(
                 alpha=0.9,
                 zorder=10 + idx,
             )
-        legend_elements.append(Line2D([0], [0], color=color, linestyle="solid", linewidth=2.5, label=mod_label))
+        legend_elements.append(
+            Line2D(
+                [0], [0], color=color, linestyle="solid", linewidth=2.5, label=mod_label
+            )
+        )
 
     # Styling
     ax.set_title(
@@ -253,7 +266,9 @@ def create_comparison_plot(
     productivity = data[RequiredColumn.PRODUCTIVITY].to_numpy(dtype=data_dtype)
     x_smooth = np.linspace(cups.min(), cups.max(), 300)
 
-    for model, ax in zip(fitted_models, axes, strict=False):  # may be more axes than models
+    for model, ax in zip(
+        fitted_models, axes, strict=False
+    ):  # may be more axes than models
         # Scatter plot of data
         ax.scatter(cups, productivity, alpha=0.3, s=10, color="gray", label="Data")
 
@@ -311,8 +326,16 @@ def visualize(args: argparse.Namespace) -> None:
     logger.info("Loaded %s models", len(models))
 
     # Determine y-axis limits
-    y_min = args.y_min if args.y_min is not None else data[RequiredColumn.PRODUCTIVITY].min()
-    y_max = args.y_max if args.y_max is not None else data[RequiredColumn.PRODUCTIVITY].max()
+    y_min = (
+        args.y_min
+        if args.y_min is not None
+        else data[RequiredColumn.PRODUCTIVITY].min()
+    )
+    y_max = (
+        args.y_max
+        if args.y_max is not None
+        else data[RequiredColumn.PRODUCTIVITY].max()
+    )
     y_limits = (y_min, y_max)
 
     # Create main analysis plot

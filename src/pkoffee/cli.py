@@ -32,7 +32,9 @@ class UnsupportedCommandError(NotImplementedError):
         super().__init__(f"{command} is not implemented.")
 
 
-class PKoffeArgParseFormatter(argparse.RawTextHelpFormatter, argparse.ArgumentDefaultsHelpFormatter):
+class PKoffeArgParseFormatter(
+    argparse.RawTextHelpFormatter, argparse.ArgumentDefaultsHelpFormatter
+):
     """Combine the RawTextHelpFormatter and ArgumentDefaultsHelpFormatter.
 
     The purpose of this class is to not format description and epilog of the parser (behavior of
@@ -58,7 +60,9 @@ Examples:
         """,
     )
 
-    parser.add_argument("--log-file", dest="log_file", type=Path, default=None, help="Log file path.")
+    parser.add_argument(
+        "--log-file", dest="log_file", type=Path, default=None, help="Log file path."
+    )
     parser.add_argument(
         "--log-level",
         dest="log_level",
@@ -69,7 +73,9 @@ Examples:
         const=LogLevel.NOTSET,
     )
 
-    subparsers = parser.add_subparsers(dest="command", help="Available commands", required=True)
+    subparsers = parser.add_subparsers(
+        dest="command", help="Available commands", required=True
+    )
 
     # Analyze command
     analyze_parser = subparsers.add_parser(

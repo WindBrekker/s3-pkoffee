@@ -44,11 +44,15 @@ def log_uncaught_exceptions() -> None:
     """
 
     def handle_exception(
-        exc_type: type[BaseException], exc_value: BaseException, exc_traceback: TracebackType | None
+        exc_type: type[BaseException],
+        exc_value: BaseException,
+        exc_traceback: TracebackType | None,
     ) -> None:
         if not issubclass(exc_type, KeyboardInterrupt):
             logger = logging.getLogger(__name__)
-            logger.critical("Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback))
+            logger.critical(
+                "Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback)
+            )
 
         sys.__excepthook__(exc_type, exc_value, exc_traceback)
 
@@ -68,11 +72,19 @@ def init_logging(log_file: Path | None, log_level: LogLevel) -> None:
     log_level : str | None
         Logging level. Default is None, in which case the default of `logging` is used (WARNING).
     """
-    logging.captureWarnings(True)  # log all warnings from the warnings module.  # noqa: FBT003 API is not ours
+    logging.captureWarnings(
+        True
+    )  # log all warnings from the warnings module.  # noqa: FBT003 API is not ours
     log_uncaught_exceptions()  # log all uncaught exceptions as well
 
-    logging_format = "%(asctime)s [%(levelname)s] %(name)s:%(lineno)s:%(funcName)s %(message)s"
-    handlers = [logging.FileHandler(log_file)] if log_file is not None else [logging.StreamHandler()]
+    logging_format = (
+        "%(asctime)s [%(levelname)s] %(name)s:%(lineno)s:%(funcName)s %(message)s"
+    )
+    handlers = (
+        [logging.FileHandler(log_file)]
+        if log_file is not None
+        else [logging.StreamHandler()]
+    )
     logging.basicConfig(
         level=log_level.value,
         format=logging_format,

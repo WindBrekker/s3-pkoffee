@@ -31,11 +31,16 @@ AnyArgsKwargs = ParamSpec("AnyArgsKwargs")
 
 
 @runtime_checkable
-class ParametricFunction(Protocol[AnyShapeDataDtypeArray, AnyDataDtypeArgsKwargs, AnyArgsKwargs]):
+class ParametricFunction(
+    Protocol[AnyShapeDataDtypeArray, AnyDataDtypeArgsKwargs, AnyArgsKwargs]
+):
     """Parametric function API."""
 
     def __call__(
-        self, x: AnyShapeDataDtypeArray, *args: AnyDataDtypeArgsKwargs.args, **kwargs: AnyDataDtypeArgsKwargs.kwargs
+        self,
+        x: AnyShapeDataDtypeArray,
+        *args: AnyDataDtypeArgsKwargs.args,
+        **kwargs: AnyDataDtypeArgsKwargs.kwargs,
     ) -> AnyShapeDataDtypeArray:
         """Evaluate the parametric function on input `x` with parameters values passed with `*args` and `**kwargs`.
 
@@ -52,7 +57,9 @@ class ParametricFunction(Protocol[AnyShapeDataDtypeArray, AnyDataDtypeArgsKwargs
         ...
 
     @classmethod
-    def param_guess(cls, *args: AnyArgsKwargs.args, **kwargs: AnyArgsKwargs.kwargs) -> dict[str, data_dtype]:
+    def param_guess(
+        cls, *args: AnyArgsKwargs.args, **kwargs: AnyArgsKwargs.kwargs
+    ) -> dict[str, data_dtype]:
         """Guess values of the `ParametricFunction` parameters.
 
         The guess values can typically be used as starting values for a fit of the parameters.
@@ -137,7 +144,9 @@ class Quadratic:
     def param_bounds(cls) -> ParametersBounds:
         """Boundary values for the `QuadraticFunction."""
         params = ["a0", "a1", "a2"]
-        return ParametersBounds(min=dict.fromkeys(params, neg_inf), max=dict.fromkeys(params, pos_inf))
+        return ParametersBounds(
+            min=dict.fromkeys(params, neg_inf), max=dict.fromkeys(params, pos_inf)
+        )
 
 
 class MichaelisMentenSaturation:
@@ -154,7 +163,11 @@ class MichaelisMentenSaturation:
     """
 
     def __call__(
-        self, x: AnyShapeDataDtypeArray, v_max: data_dtype, k: data_dtype, y0: data_dtype
+        self,
+        x: AnyShapeDataDtypeArray,
+        v_max: data_dtype,
+        k: data_dtype,
+        y0: data_dtype,
     ) -> AnyShapeDataDtypeArray:
         """Evaluate the MichaelisMenten Function in each point in `x`.
 
@@ -315,7 +328,9 @@ class PeakModel:
        from https://en.wikipedia.org/w/index.php?title=Gamma_distribution&oldid=1320436343
     """
 
-    def __call__(self, x: AnyShapeDataDtypeArray, a: data_dtype, b: data_dtype) -> AnyShapeDataDtypeArray:
+    def __call__(
+        self, x: AnyShapeDataDtypeArray, a: data_dtype, b: data_dtype
+    ) -> AnyShapeDataDtypeArray:
         """Evaluate `PeakModel` function at each point in `x`.
 
         Parameters
@@ -335,7 +350,9 @@ class PeakModel:
         return a * x * np.exp(-x / np.maximum(b, 1e-9))
 
     @classmethod
-    def param_guess(cls, x_min: data_dtype, x_max: data_dtype, y_max: data_dtype) -> dict[str, data_dtype]:
+    def param_guess(
+        cls, x_min: data_dtype, x_max: data_dtype, y_max: data_dtype
+    ) -> dict[str, data_dtype]:
         """Parameter guesses for a fit initial values.
 
         x are the function input values, y the predictions in the data points. `a`'s guess is the maximum prediction
@@ -360,7 +377,10 @@ class PeakModel:
     @classmethod
     def param_bounds(cls) -> ParametersBounds:
         """Boundary values for the `Logistic`."""
-        return ParametersBounds(min={"a": neg_inf, "b": data_dtype(0.0)}, max=dict.fromkeys(["a", "b"], pos_inf))
+        return ParametersBounds(
+            min={"a": neg_inf, "b": data_dtype(0.0)},
+            max=dict.fromkeys(["a", "b"], pos_inf),
+        )
 
 
 class Peak2Model:
@@ -369,7 +389,9 @@ class Peak2Model:
     Similar to `PeakModel` but with quadratic growth before decay.
     """
 
-    def __call__(self, x: AnyShapeDataDtypeArray, a: data_dtype, b: data_dtype) -> AnyShapeDataDtypeArray:
+    def __call__(
+        self, x: AnyShapeDataDtypeArray, a: data_dtype, b: data_dtype
+    ) -> AnyShapeDataDtypeArray:
         """Evaluate `Peak2Model` at each point in `x`.
 
         Parameters
@@ -389,7 +411,9 @@ class Peak2Model:
         return a * (x**2) * np.exp(-x / np.maximum(b, 1e-9))
 
     @classmethod
-    def param_guess(cls, x_min: data_dtype, x_max: data_dtype, y_max: data_dtype) -> dict[str, data_dtype]:
+    def param_guess(
+        cls, x_min: data_dtype, x_max: data_dtype, y_max: data_dtype
+    ) -> dict[str, data_dtype]:
         """Parameter guesses for a fit initial values.
 
         x are the function input values, y the predictions in the data points. `a`'s guess is the maximum prediction
@@ -417,4 +441,7 @@ class Peak2Model:
     @classmethod
     def param_bounds(cls) -> ParametersBounds:
         """Boundary values for the `Logistic`."""
-        return ParametersBounds(min={"a": neg_inf, "b": data_dtype(0.0)}, max=dict.fromkeys(["a", "b"], pos_inf))
+        return ParametersBounds(
+            min={"a": neg_inf, "b": data_dtype(0.0)},
+            max=dict.fromkeys(["a", "b"], pos_inf),
+        )
